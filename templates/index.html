@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>Rock Paper Scissors AI</title>
+
+  <style>
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+      font-family:Arial;
+    }
+
+    body{
+      background:#0f172a;
+      color:white;
+      text-align:center;
+      padding:20px;
+    }
+
+    h1{
+      margin-bottom:20px;
+      color:#00e5ff;
+    }
+
+    .container{
+      max-width:1200px;
+      margin:auto;
+    }
+
+    .game-info{
+      display:flex;
+      justify-content:space-around;
+      margin:20px 0;
+      flex-wrap:wrap;
+      gap:20px;
+    }
+
+    .box{
+      background:#1e293b;
+      padding:20px;
+      border-radius:20px;
+      width:250px;
+      box-shadow:0 0 20px rgba(0,0,0,0.5);
+    }
+
+    .box h2{
+      margin-bottom:10px;
+      color:#38bdf8;
+    }
+
+    .value{
+      font-size:30px;
+      margin-top:10px;
+    }
+
+    .result{
+      color:#22c55e;
+      font-size:40px;
+      margin:20px;
+    }
+
+    .scores{
+      font-size:25px;
+      margin-top:10px;
+    }
+
+    .camera{
+      margin-top:10px;
+      border:5px solid #00e5ff;
+      border-radius:10px;
+      overflow:hidden;
+    }
+
+    img{
+      width:50%;
+      max-width:1000px;
+    }
+
+  </style>
+
+</head>
+
+<body>
+
+  <div class="container">
+
+    <h1>ROCK PAPER SCISSORS AI</h1>
+
+    <div class="game-info">
+
+      <div class="box">
+        <h2>PLAYER</h2>
+        <div class="value" id="player">
+          Waiting...
+        </div>
+      </div>
+
+      <div class="box">
+        <h2>COMPUTER</h2>
+        <div class="value" id="computer">
+          Waiting...
+        </div>
+      </div>
+
+    </div>
+
+    <div class="result" id="winner">
+      Start Game
+    </div>
+
+    <div class="scores">
+      You :
+      <span id="player_score">0</span>
+
+      |
+
+      AI :
+      <span id="computer_score">0</span>
+    </div>
+
+    <div class="camera">
+
+      <img src="{{ url_for('video') }}">
+
+    </div>
+
+  </div>
+
+  <script>
+
+    async function updateGameData(){
+
+      const response = await fetch('/game_data');
+
+      const data = await response.json();
+
+      document.getElementById('player').innerText =
+      data.player;
+
+      document.getElementById('computer').innerText =
+      data.computer;
+
+      document.getElementById('winner').innerText =
+      data.winner;
+
+      document.getElementById('player_score').innerText =
+      data.player_score;
+
+      document.getElementById('computer_score').innerText =
+      data.computer_score;
+
+    }
+
+    setInterval(updateGameData, 1000);
+
+  </script>
+
+</body>
+
+</html>
